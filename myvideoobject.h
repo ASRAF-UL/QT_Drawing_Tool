@@ -1,39 +1,24 @@
-#ifndef CLICKABLE_LABEL_H
-#define CLICKABLE_LABEL_H
+#ifndef MYVIDEOOBJECT_H
+#define MYVIDEOOBJECT_H
 
-#include <QWidget>
-#include <QLabel>
+#include <QVideoWidget>
+#include <QGraphicsView>
 
-class Clickable_Label : public QLabel
+class QRubberBand;
+
+class MyVideoObject : public QGraphicsView
 {
-    Q_OBJECT
 public:
-    explicit Clickable_Label(QWidget *parent = nullptr);
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void paintEvent(QPaintEvent *event) override;
-    void getNearestPoint(QPoint);
-
-    struct controls {
-      int initial_position_flag = 0;
-      int end_position_flag = 0;
-      int resize = 0;
-      int nearest_point = 0;
-    } flags;
-
-    struct points {
-      QPoint init_p;
-      QPoint end_p;
-      QPoint resize_p;
-    } point;
-
-signals:
-    void clicked(QPoint);
-    void released(QPoint);
-    void moved(QPoint);
-
-public slots:
+    MyVideoObject(QWidget *parent = nullptr);
+protected:
+    void mouseMoveEvent(QMouseEvent *ev);
+    void mousePressEvent(QMouseEvent *ev);
+    void mouseReleaseEvent(QMouseEvent *ev);
+    void paintEvent(QPaintEvent *ev);
+private:
+    QRubberBand *rubberBand;
+    QPoint origin;
+    QRect rect;
 };
 
-#endif // CLICKABLE_LABEL_H
+#endif // MYVIDEOOBJECT_H

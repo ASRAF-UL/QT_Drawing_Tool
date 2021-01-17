@@ -7,6 +7,7 @@
 QT       += core gui
 QT       += multimedia
 QT       += multimediawidgets
+QT       += mqtt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = DrawingTool
@@ -27,11 +28,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    clickable_label.cpp
+    myvideoobject.cpp
 
 HEADERS += \
         mainwindow.h \
-    clickable_label.h
+    myvideoobject.h
 
 FORMS += \
         mainwindow.ui

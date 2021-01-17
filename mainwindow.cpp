@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QtMqtt/QMqttClient>
 
 #include <QMainWindow>
 #include <QVector>
@@ -20,11 +21,14 @@
 #include <QPainter>
 #include <QPen>
 #include <QPixmap>
-#include "clickable_label.h"
+#include "myvideoobject.h"
 #include <QVideoWidget>
 #include <QMediaPlayer>
 #include <QNetworkRequest>
 #include <QVideoProbe>
+#include <clickable_label.h>
+
+#include <QGraphicsVideoItem>
 static MainWindow * staticObj;
 using namespace std;
 
@@ -35,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     staticObj = this;
     ui->setupUi(this);
-    clickl = new Clickable_Label();
+    _vw1 = new MyVideoObject();
 }
 
 MainWindow::~MainWindow()
@@ -45,52 +49,36 @@ MainWindow::~MainWindow()
 //Draw Reactangle
 void MainWindow::on_pushButton_clicked()
 {
+    QGraphicsVideoItem *item1 = new QGraphicsVideoItem;
+
+
     setWindowTitle("Drawing Tool");
-    QVideoWidget *_vw1 = new QVideoWidget;
     QMediaPlayer *_player1 = new QMediaPlayer;
-    _player1->setVideoOutput(_vw1);
+    _player1->setVideoOutput(item1);
     const QUrl url1 = QUrl("rtsp://admin:admin123@192.168.0.109:554");
     const QNetworkRequest requestRtsp1(url1);
     _player1->setMedia(requestRtsp1);
-    _vw1->setGeometry(100,100,300,400);
+    _vw1->setGeometry(100,100,100,100);
     _player1->play();
 
-    QVideoProbe* videoProbe = new QVideoProbe(this);
-    QImage img;
-
-    if(!test_image.data)
-    {
-        qDebug()<<"test image invalid";
-        QMessageBox msg;
-        msg.setText("Could not load Image");
-        msg.exec();
-    }
-
-    img= QImage((uchar*) test_image.data, test_image.cols, test_image.rows, static_cast<int>(test_image.step),QImage::Format_RGB888);
-    pixel = QPixmap::fromImage(img.rgbSwapped());
-    ui->horizontalLayout->addWidget(clickl);
     ui->horizontalLayout->addWidget(_vw1);
-
-    clickl->setPixmap(pixel);
-    clickl->setFixedHeight(pixel.height());
-    clickl->setFixedWidth(pixel.width());
 
 }
 
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    clickl->flags.end_position_flag=0;
-    clickl->flags.initial_position_flag=0;
-    clickl->flags.nearest_point = 0;
-    clickl->flags.resize = 0;
-    update();
+//    _vw1->flags.end_position_flag=0;
+//    _vw1->flags.initial_position_flag=0;
+//    _vw1->flags.nearest_point = 0;
+//    _vw1->flags.resize = 0;
+//    update();
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    QRect rect(clickl->point.init_p,clickl->point.end_p);
-    QPixmap cropped = pixel.copy(rect);
-    cropped.save("/home/asraful-sigmind/human/cropped_image.jpg");
+//    QRect rect(_vw1->point.init_p,_vw1->point.end_p);
+//    QPixmap cropped = pixel.copy(rect);
+//    cropped.save("/home/asraful-sigmind/human/cropped_image.jpg");
 }
 

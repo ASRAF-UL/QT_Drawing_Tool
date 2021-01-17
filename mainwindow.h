@@ -10,7 +10,7 @@
 #include <opencv2/video/tracking.hpp>
 
 #include <QMainWindow>
-#include <clickable_label.h>
+#include <myvideoobject.h>
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Clickable_Label *clickl;
+    MyVideoObject *_vw1;
     cv::Mat test_image = cv::imread("/home/asraful-sigmind/human/smile.jpeg");
     QPixmap pixel;
 
